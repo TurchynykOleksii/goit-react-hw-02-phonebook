@@ -1,5 +1,6 @@
 import React from 'react';
 import css from './Form.module.css';
+import { PropTypes } from 'prop-types';
 
 export const Form = ({ submitProps }) => {
   return (
@@ -31,4 +32,8 @@ export const Form = ({ submitProps }) => {
       </button>
     </form>
   );
+};
+
+Form.propTypes = {
+  submitProps: PropTypes.func,
 };

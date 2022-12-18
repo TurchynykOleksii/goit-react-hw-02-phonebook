@@ -1,5 +1,6 @@
 import css from '../Form/Form.module.css';
 import React from 'react';
+import { PropTypes } from 'prop-types';
 
 export const Filter = ({ filter }) => {
   return (
@@ -16,4 +17,8 @@ export const Filter = ({ filter }) => {
       />
     </div>
   );
+};
+
+Filter.propTypes = {
+  filter: PropTypes.func,
 };

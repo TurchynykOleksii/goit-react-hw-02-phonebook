@@ -1,11 +1,10 @@
 import css from './ContactList.module.css';
 import React from 'react';
+import { PropTypes } from 'prop-types';
 
 export const ContactList = ({ changeList, onDeleteContact }) => {
-  // asdasda?
   return (
     <>
-      <h2>Contacts</h2>
       {changeList.length > 0 && (
         <ul className={css.list}>
           {changeList.map(({ id, name, number }) => {
@@ -28,4 +27,9 @@ export const ContactList = ({ changeList, onDeleteContact }) => {
       )}
     </>
   );
+};
+
+ContactList.propTypes = {
+  changeList: PropTypes.array,
+  onDeleteContact: PropTypes.func,
 };

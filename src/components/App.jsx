@@ -3,6 +3,7 @@ import { Form } from './Form';
 import { ContactList } from './ContactList';
 import { nanoid } from 'nanoid';
 import { Filter } from './Filter';
+import { PropTypes } from 'prop-types';
 
 export class App extends Component {
   state = {
@@ -38,6 +39,7 @@ export class App extends Component {
       name: name.value,
       number: number.value,
     };
+
     if (itsHaveName) {
       alert(`${name.value} is already in contacts`);
     } else {
@@ -48,7 +50,6 @@ export class App extends Component {
         id: this.getId(),
       });
     }
-
     e.currentTarget.reset();
   };
 
@@ -77,6 +78,8 @@ export class App extends Component {
       <div className="app">
         <h1>Phonebook</h1>
         <Form fieldStat={this.state} submitProps={this.onSubmitForm} />
+
+        <h2>Contacts</h2>
         <Filter filter={this.onFilterContacts} />
         <ContactList
           changeList={this.filterArrContacts()}
