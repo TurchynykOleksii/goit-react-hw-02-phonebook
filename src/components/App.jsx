@@ -23,20 +23,32 @@ export class App extends Component {
   }
 
   onSubmitForm = (e) => {
-    const {name, number} = e.target.elements;
     e.preventDefault()
+    const {name, number} = e.target.elements;
+    const {contacts} = this.state;
+
+    const normalize = name.value.toLowerCase();
+
+    const itsHaveName = contacts.find(current => current.name.toLowerCase().includes(normalize));
+
     const formFields = {
       id: this.getId(),
       name: name.value,
       number: number.value,
     }
+    console.log(itsHaveName)
+    if (itsHaveName) {
+      alert(`${name.value} is already in contacts`)
+    } else {
+      this.setState({
+        contacts: this.state.contacts.concat(formFields),
+        name: name.value,
+        number: number.value,
+        id: this.getId()
+      })
+    }
 
-    this.setState({
-      contacts: this.state.contacts.concat(formFields),
-      name: name.value,
-      number: number.value,
-      id: this.getId()
-    })
+
     e.currentTarget.reset()
   }
 
@@ -50,6 +62,15 @@ export class App extends Component {
     )
   }
 
+  onDeleteContact = (id) => {
+    return this.setState(({contacts}) => {
+      return {
+        contacts: contacts.filter(contact => contact.id !== id),
+        filter: ''
+      }
+    })
+  }
+
 
   render() {
     return (
@@ -57,7 +78,7 @@ export class App extends Component {
         <h1>Phonebook</h1>
         <Form fieldStat={this.state} submitProps={this.onSubmitForm}/>
         <Filter filter={this.onFilterContacts}/>
-        <ContactList changeList={this.filterArrContacts()}
+        <ContactList changeList={this.filterArrContacts()} onDeleteContact={this.onDeleteContact}
 
         />
       </div>

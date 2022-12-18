@@ -1,7 +1,7 @@
 import css from './ContactList.module.css'
 
 
-export const ContactList = ({changeList}) => {
+export const ContactList = ({changeList, onDeleteContact}) => {
 
   return (
     <>
@@ -10,7 +10,8 @@ export const ContactList = ({changeList}) => {
         {changeList.map(({id, name, number}) => {
           return (
             <li key={id} className={css.listItem}>
-              <span>{name}: {number}</span>
+              <span className={css.span}>{name}: {number}</span>
+              <button className={css.button} type="button" onClick={() => onDeleteContact(id)}>delete</button>
             </li>
           )
         })}
