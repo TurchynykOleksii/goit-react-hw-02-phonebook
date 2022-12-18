@@ -3,7 +3,6 @@ import { Form } from './Form';
 import { ContactList } from './ContactList';
 import { nanoid } from 'nanoid';
 import { Filter } from './Filter';
-import { PropTypes } from 'prop-types';
 
 export class App extends Component {
   state = {
