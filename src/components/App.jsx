@@ -36,7 +36,6 @@ export class App extends Component {
       name: name.value,
       number: number.value,
     }
-    console.log(itsHaveName)
     if (itsHaveName) {
       alert(`${name.value} is already in contacts`)
     } else {
