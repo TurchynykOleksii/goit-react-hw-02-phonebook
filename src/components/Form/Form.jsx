@@ -1,15 +1,19 @@
-import css from './Form.module.css'
+import React from 'react';
+import css from './Form.module.css';
 
-export const Form = ({submitProps}) => {
+export const Form = ({ submitProps }) => {
   return (
     <form onSubmit={submitProps} className={css.form}>
       <label className={css.label}>
         <span className={css.span}>Name:</span>
-        <input className={css.input} type="text"
-               name="name"
-               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-               required/>
+        <input
+          className={css.input}
+          type="text"
+          name="name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
       </label>
       <label className={css.label}>
         <span className={css.span}>Phone:</span>
@@ -22,7 +26,9 @@ export const Form = ({submitProps}) => {
           required
         />
       </label>
-      <button className={css.button} type="submit">add contact</button>
+      <button className={css.button} type="submit">
+        add contact
+      </button>
     </form>
-  )
-}
+  );
+};
