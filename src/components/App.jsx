@@ -2,6 +2,7 @@ import {Component} from "react";
 import {Form} from './Form';
 import {ContactList} from "./ContactList";
 import {nanoid} from 'nanoid'
+import {Filter} from './Filter'
 
 export class App extends Component {
   state = {
@@ -13,6 +14,7 @@ export class App extends Component {
     ],
     name: '',
     number: '',
+    filter: ''
   }
 
   getId = () => {
@@ -24,9 +26,9 @@ export class App extends Component {
     const {name, number} = e.target.elements;
     e.preventDefault()
     const formFields = {
+      id: this.getId(),
       name: name.value,
       number: number.value,
-      id: this.getId()
     }
 
     this.setState({
@@ -35,17 +37,29 @@ export class App extends Component {
       number: number.value,
       id: this.getId()
     })
-
     e.currentTarget.reset()
   }
 
+  onFilterContacts = (e) => {
+    this.setState({filter: e.currentTarget.value})
+  }
+
+  filterArrContacts = () => {
+    const {contacts, filter} = this.state;
+    return contacts.filter(current => current.name.toLowerCase().includes(filter.toLowerCase())
+    )
+  }
+
+
   render() {
-    console.log(this.state)
     return (
       <div className="app">
         <h1>Phonebook</h1>
         <Form fieldStat={this.state} submitProps={this.onSubmitForm}/>
-        <ContactList contactField={this.state.contacts}/>
+        <Filter filter={this.onFilterContacts}/>
+        <ContactList changeList={this.filterArrContacts()}
+
+        />
       </div>
     )
   }
