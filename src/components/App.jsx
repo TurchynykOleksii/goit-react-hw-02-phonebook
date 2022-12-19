@@ -6,61 +6,26 @@ import { Filter } from './Filter';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    name: '',
-    number: '',
+    contacts: [],
     filter: '',
   };
 
-  getId = () => {
-    let nanoIds = nanoid();
-    return nanoIds;
-  };
-
-  onSubmitForm = e => {
-    e.preventDefault();
-    const { name, number } = e.target.elements;
-    const { contacts } = this.state;
-
-    const normalize = name.value.toLowerCase();
-
-    const itsHaveName = contacts.find(current =>
-      current.name.toLowerCase().includes(normalize)
+  getContact = data => {
+    const itsContacts = this.state.contacts.find(
+      contact => contact.name === data.name
     );
-
-    const formFields = {
-      id: this.getId(),
-      name: name.value,
-      number: number.value,
-    };
-
-    if (itsHaveName) {
-      alert(`${name.value} is already in contacts`);
-    } else {
-      this.setState({
-        contacts: this.state.contacts.concat(formFields),
-        name: name.value,
-        number: number.value,
-        id: this.getId(),
-      });
+    if (itsContacts) {
+      alert(`${data.name} is already in contacts`);
+      return;
     }
-    e.currentTarget.reset();
+    const newContact = { ...data, id: nanoid() };
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
   };
 
   onFilterContacts = e => {
     this.setState({ filter: e.currentTarget.value });
-  };
-
-  filterArrContacts = () => {
-    const { contacts, filter } = this.state;
-    return contacts.filter(current =>
-      current.name.toLowerCase().includes(filter.toLowerCase())
-    );
   };
 
   onDeleteContact = id => {
@@ -72,16 +37,23 @@ export class App extends Component {
     });
   };
 
+  filterArrContacts = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(current =>
+      current.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
   render() {
+    const filterContacts = this.filterArrContacts();
     return (
       <div className="app">
         <h1>Phonebook</h1>
-        <Form fieldStat={this.state} submitProps={this.onSubmitForm} />
-
+        <Form submitProps={this.getContact} />
         <h2>Contacts</h2>
-        <Filter filter={this.onFilterContacts} />
+        <Filter filter={this.onFilterContacts} value={this.state.filter} />
         <ContactList
-          changeList={this.filterArrContacts()}
+          changeList={filterContacts}
           onDeleteContact={this.onDeleteContact}
         />
       </div>
