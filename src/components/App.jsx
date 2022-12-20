@@ -12,7 +12,7 @@ export class App extends Component {
 
   getContact = data => {
     const itsContacts = this.state.contacts.find(
-      contact => contact.name === data.name
+      contact => contact.name.toLowerCase() === data.name.toLowerCase()
     );
     if (itsContacts) {
       alert(`${data.name} is already in contacts`);
